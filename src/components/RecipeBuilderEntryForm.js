@@ -1,26 +1,74 @@
 import React from 'react';
+import base from '../base';
 
 class RecipeBuilderEntryForm extends React.Component{
 
-	goToRecipeBuilder(event) {
-		event.preventDefault();
-		
-		// first grab text from box
-		// Transition from / to /store/xxxx
-		const userId = this.userInput.value;
-		console.log(`Transitioning To: ${userId}`);
-		this.context.router.transitionTo(`/recipeBuilder/${userId}`);
-	}
+constructor() {
+    super();
+    this.renderLogin = this.renderLogin.bind(this);
+    this.authenticate = this.authenticate.bind(this);
+    this.authHandler = this.authHandler.bind(this);
+    this.state = {
+      uid: null
+    }
+  }
+
+  componentDidMount() {
+    base.onAuth((user) => {
+      if(user) {
+        this.authHandler(null, { user });
+      }
+    });
+  }
+
+  goToRecipeBuilder(userId) {
+	console.log(`Transitioning To: ${userId}`);
+	this.context.router.transitionTo(`/recipeBuilder/${userId}`);
+  }
+
+  authenticate(provider) {
+    console.log(`Trying to log in with ${provider}`);
+    base.authWithOAuthPopup(provider, this.authHandler);
+  }
+
+  authHandler(err, authData)  {
+    console.log(authData);
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    // grab the store info
+    const storeRef = base.database().ref(authData.user.uid);
+
+    // query the firebase once for the store data
+    storeRef.once('value', (snapshot) => {
+      const data = snapshot.val() || {};
+
+      this.setState({
+        uid: authData.user.uid,
+      });
+
+      this.goToRecipeBuilder(authData.user.uid);
+    });
+
+  }
+
+  renderLogin() {
+    return (
+      <nav className="login">
+        <h2>Welcome!!</h2>
+        <p>Sign in to your recipe builder</p>
+        <button className="facebook" onClick={() => this.authenticate('facebook')} >Log In with Facebook</button>
+        <button className="twitter" onClick={() => this.authenticate('twitter')} >Log In with Twitter</button>
+      </nav>
+    )
+  }
 
 	render() {
 		return (
-			<form className="user-selector" onSubmit={(e) => this.goToRecipeBuilder(e)}>
-				{/* Ou yeah!! This is a comment*/}
-				<h2>Please Enter Your UserName</h2>
-				<input type="text" required placeholder="User Name" defaultValue="Guille" ref={(input) =>{this.userInput = input}}/>
-				<button type="submit">Visit Recipe Builder -> </button>
-			</form>
-			)
+			<div>{this.renderLogin()}</div>
+			);
 	}
 }
 

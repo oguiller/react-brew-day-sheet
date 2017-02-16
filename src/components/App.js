@@ -15,12 +15,21 @@ class App extends React.Component {
 		this.updateRecipe = this.updateRecipe.bind(this);
 		this.removeRecipe = this.removeRecipe.bind(this);
 		this.updateCurrentRecipe = this.updateCurrentRecipe.bind(this);
+		this.logout = this.logout.bind(this);
 		// getInitialState
 		this.state = {
-			recipes: {},
-			currentRecipe: {hops: [], grains: []}
+			recipes: {}
+			,currentRecipe: {hops: [], grains: []}
+			,uid: null
 		};
 	}
+
+	logout() {
+		console.log("LOG OUT!!");
+    	base.unauth();
+    	this.setState({ uid: null });
+    	this.context.router.transitionTo(`/`);
+  	}
 
 	componentWillMount() {
 		// this runs right before the <App> is rendered
@@ -76,9 +85,11 @@ class App extends React.Component {
 	}
 
 	render() {
+		const logout = <button onClick={this.logout}>Log Out!</button>;
 		return (
 			<div className="brew-day-sheet">
 				<div className="menu">
+					{logout}
 					<Header tagline="Our own brew day sheet"/>
 					<ul className="list-of-recipes">
 					{Object
@@ -99,6 +110,10 @@ class App extends React.Component {
 
 App.PropTypes = {
 	params: React.PropTypes.object.isRequired
+}
+
+App.contextTypes = {
+	router: React.PropTypes.object
 }
 
 export default App; 
