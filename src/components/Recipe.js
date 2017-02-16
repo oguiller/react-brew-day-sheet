@@ -7,13 +7,16 @@ render () {
 
 	return (
 		<li className="menu-recipe">
-        	<h3 className="recipe-name">
-          		{details.name}
-        	</h3>
-        <p>{details.desc}</p>
-        <h4>
-          		Brewer's name:
-        	</h4><span>{details.brewerName}</span>
+    <div className="image-details">
+      <img src={details.image} alt={details.name} />
+    </div>
+    <div className="recipe-details">
+        <h3 className="recipe-name">{details.name}</h3>
+        <label>Type:</label><span>{details.beerType}</span><br/>
+        <label>Brewer's name: </label><span>{details.brewerName}</span><br/>
+        <label>Batch Size:</label><span>{details.batchSize}</span><br/>
+        <label>Cost:</label><span>{details.totalCost}</span>
+    </div>
 		</li>
 			);
 	}

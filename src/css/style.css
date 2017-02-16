@@ -598,15 +598,18 @@ ul.order li span.count span {
 .recipe-edit .hop input {
   width: 11.1%;
 }
-.costs {
+.cost {
   width: 100%;
 }
 
-.costs input {
-  width: auto;
-    -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+.cost input {
+  width: 85%;
+}
+
+.cost span {
+  width: 15%;
+  float: left;
+  padding: 9px;
 }
 
 .list-of-recipes {
@@ -653,6 +656,25 @@ ul.order li span.count span {
   width: 150px;
   margin-right: 1rem;
 }
+
+.menu-recipe div {
+  float: left;
+  height:150px;
+  margin-right: 1rem;
+}
+.recipe-details h3 {
+  padding-bottom: 10px;
+}
+
+.recipe-details label{
+  padding: 2px;
+  font-weight: bold;
+}
+
+.menu-recipe h6 span{
+  float:  left
+}
+
 button,
 input[type=submit] {
   text-transform: uppercase;

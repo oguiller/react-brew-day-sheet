@@ -40,9 +40,9 @@ class AddRecipeForm extends React.Component {
       yeastType: this.yeastType.value,
       avgAttenuation: this.avgAttenuation.value,
       optTemperature: this.optTemperature.value,
-      starter: this.starter.value
+      starter: this.starter.value,
+      totalCost: this.totalCost.value
     }
-    console.log("HEEeeeeere");
 
     this.props.updateCurrentRecipe(recipe);
     this.props.addRecipe(recipe);
@@ -56,9 +56,9 @@ render () {
         <input ref={(input) => this.name = input} type="text" placeholder="Beer Name" required/>
         <input ref={(input) => this.brewerName = input} type="text" placeholder="Brewer's name" required/>
         <select ref={(input) => this.beerType = input} required>
-          <option value="ALL_GRAIN">All Grain</option>
-          <option value="EXTRACT">Extract</option>
-          <option value="PARTIAL_MASH">Partial Mash</option>
+          <option value="All Grain">All Grain</option>
+          <option value="Extract">Extract</option>
+          <option value="Partial Mash">Partial Mash</option>
         </select>
         <input ref={(input) => this.boilTime = input} type="text" placeholder="Boil time" pattern="^[0-9]*$"/>
         <input ref={(input) => this.batchSize = input} type="text" placeholder="Batch size" pattern="^[0-9]*$" required/>
@@ -96,17 +96,16 @@ render () {
             <input ref={(input) => this.starter = input} type="text" placeholder="Starter" />
         </div>
         <span>COSTS</span>
-        <div className="costs">
-            <span className="cost-label">Grains </span>
+        <div className="cost">
+            <span>Grains </span>
             <input ref={(input) => this.grainCost = input} type="number" min={0.0} placeholder="Cost" pattern="[0-9]+(\.[0-9][0-9]?)?"/>
-            <span className="cost-label">Hops </span>
+            <span>Hops </span>
             <input ref={(input) => this.hopsCost = input} type="number" min={0.0} placeholder="Cost" pattern="[0-9]+(\.[0-9][0-9]?)?"/>
-            <span className="cost-label">Yeast </span>
+            <span>Yeast </span>
             <input ref={(input) => this.yeastCost = input} type="number" min={0.0} placeholder="Cost" pattern="[0-9]+(\.[0-9][0-9]?)?"/>
-            <span className="cost-label">Other </span>
+            <span>Other </span>
             <input ref={(input) => this.otherCost = input} type="number" min={0.0} placeholder="Cost" pattern="[0-9]+(\.[0-9][0-9]?)?"/>
-            <span className="cost-label">Total </span>
-            <input ref={(input) => this.totalCost = input} type="number" min={0.0} placeholder="Cost" pattern="[0-9]+(\.[0-9][0-9]?)?"/>
+            <input ref={(input) => this.totalCost = input} type="number" min={0.0} placeholder="Total" pattern="[0-9]+(\.[0-9][0-9]?)?"/>
         </div>
         <span>NOTES</span>
           <textarea ref={(input) => this.notes = input} placeholder="Notes" ></textarea>
